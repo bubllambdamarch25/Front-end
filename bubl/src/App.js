@@ -12,9 +12,11 @@ class App extends Component {
 
   }
 
-  handleUserLogin = (school, registering) => {
+  handleUserLogin = ({school, registering}) => {
+    console.log('TTTTT', school, registering);
+    
     this.setState({
-      school_id: school.school_id,
+      school_id: school.id,
       registering
     })
   }
@@ -24,7 +26,7 @@ class App extends Component {
       <div className="App">
         <Route exact path='/' render={props => <Home {...props} userLoginState={this.state} handleUserLogin={this.handleUserLogin} /> } />
         <Route exact path='/Bubles' component={Bubles} />
-    <Route exact path='/Register' render={ props => <UserForm {...props} userLoginState={this.state}/>} />
+        <Route exact path='/Register' render={ props => <UserForm {...props} userLoginState={this.state}/>} />
       </div>
     );
   }

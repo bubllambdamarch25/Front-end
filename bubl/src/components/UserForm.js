@@ -30,16 +30,18 @@ class UserForm extends Component {
   };
 
   render() {
+      console.log('formprops', this.props);
+      
     const { name, username, password, school_id } = this.state;
     return (
       <form className="form" onSubmit={this.formSubmit}>
-        <input
+        {this.props.userLoginState.registering ? <input
           type="text"
           value={name}
           name="name"
           placeholder="Enter name..."
           onChange={this.handleInputChange}
-        />
+        /> : null}
         <input
           type="text"
           value={username}
@@ -54,13 +56,13 @@ class UserForm extends Component {
           placeholder="Enter password..."
           onChange={this.handleInputChange}
         />
-        <input
+        {this.props.userLoginState.registering ? <input
           type="text"
           value={school_id}
           name="school_id"
           placeholder="Enter school id..."
           onChange={this.handleInputChange}
-        />
+        /> : null}
         
         <button type="submit">{this.props.title}Submit</button>
       </form>
