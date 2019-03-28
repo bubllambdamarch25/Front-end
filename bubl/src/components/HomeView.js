@@ -4,8 +4,8 @@ import { fetchSchools} from '../store/actions/actions';
 import SchoolCard from './SchoolCard';
 
 class Home extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {schools: []}
   }
 
@@ -13,15 +13,17 @@ class Home extends Component {
     this.props.fetchSchools();
   }
 
+
+
   render() {
-      console.log(this.props.schools)
+      console.log(this.props)
     return (
       <div>
         {this.props.requesting ? (
           <div>Loading...</div>
         ) : (
          this.props.schools.map(school => (
-          <SchoolCard school = {school} />
+          <SchoolCard school = {school} handleUserLogin = {this.props.handleUserLogin} />
          ))
         )}
       </div>

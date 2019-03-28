@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
+import  { connect } from "react-redux";
+import { handleUserAuth, login} from '../store/actions/actions';
 
 class UserForm extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       name: '',
       username: '',
       password: '',
-      school_id: ''
+      school_id: this.props.userLoginState.school_id
     };
   }
 
@@ -18,8 +20,13 @@ class UserForm extends Component {
   formSubmit = e => {
     e.preventDefault();
     const { name, username, password, school_id } = this.state;
-    this.props.handleUserAuth({ name, username, password, school_id });
-    this.setState({ name: '', username: '', password: '', school_id: '' });
+    if (this.props.registering) {
+        this.props.handleUserAuth({ name, username, password, school_id });
+    } else {
+        this.props.login({ username, password });
+    }
+    this.setState({ name: '', username: '', password: '' });
+    this.props.history.push('/Bubles')
   };
 
   render() {
@@ -36,29 +43,40 @@ class UserForm extends Component {
         <input
           type="text"
           value={username}
-          name="height"
-          placeholder="Enter height..."
+          name="username"
+          placeholder="Enter username..."
           onChange={this.handleInputChange}
         />
         <input
           type="text"
           value={password}
-          name="age"
-          placeholder="Enter age..."
+          name="password"
+          placeholder="Enter password..."
           onChange={this.handleInputChange}
         />
         <input
           type="text"
           value={school_id}
-          name="age"
-          placeholder="Enter age..."
+          name="school_id"
+          placeholder="Enter school id..."
           onChange={this.handleInputChange}
         />
         
-        <button type="submit">{this.props.title}</button>
+        <button type="submit">{this.props.title}Submit</button>
       </form>
     );
   }
 }
 
-export default UserForm;
+const mapStateToProps = (state) => {
+    return {
+      user: state.userReducer.user,
+      requesting: state.userReducer.requesting
+  
+    }
+  
+  }
+  
+  export default connect(mapStateToProps, {handleUserAuth, login})(UserForm)
+  
+
