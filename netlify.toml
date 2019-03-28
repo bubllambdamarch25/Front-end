@@ -1,0 +1,7 @@
+[build]
+
+base = "bubl/"
+
+publish="bubl/build/"
+
+command="yarn build"
